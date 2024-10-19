@@ -1,8 +1,29 @@
 // FrontPage.js
-import React from 'react';
+// FrontPage.js
+import React, { useState } from 'react';
 import { Camera, BookOpen, Grid, Award } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const FrontPage = () => {
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const navigate = useNavigate();
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCaptureImage = () => {
+    // Navigate to the EntryPage and pass the uploaded image as state
+    navigate('/entry', { state: { uploadedImage } });
+  };
+
   return (
     <div className="flex h-screen bg-stone-100">
       {/* Left Navigation Panel */}
@@ -39,8 +60,18 @@ const FrontPage = () => {
           <h2 className="text-xl font-semibold text-stone-700 mb-6">Document Your Visit</h2>
           <div className="flex flex-col items-center justify-center border border-stone-300 rounded-lg p-12 bg-stone-50">
             <Camera className="w-16 h-16 text-stone-400 mb-6" />
-            <button className="bg-stone-800 text-stone-100 px-6 py-2 rounded text-sm font-medium hover:bg-stone-700 transition duration-300">
-              Capture Image
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="mb-4"
+            />
+            <button
+              onClick={handleCaptureImage}
+              className="bg-stone-800 text-stone-100 px-6 py-2 rounded text-sm font-medium hover:bg-stone-700 transition duration-300"
+              disabled={!uploadedImage} // Disable the button if no image is uploaded
+            >
+              Create Entry
             </button>
           </div>
         </div>
