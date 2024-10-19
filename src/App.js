@@ -1,10 +1,9 @@
 import React from 'react';
-import FrontPage from './components/FrontPage';
 
 function App() {
   return (
     <div className="App">
-      <FrontPage />
+      <h1>Welcome to Museum Archive</h1>
     </div>
   );
 }
