@@ -19,8 +19,17 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FrontPage from './pages/FrontPage';
 import EntryPage from './pages/EntryPage';
+import { DynamicContextProvider, DynamicWidget } from '@dynamic-labs/sdk-react-core';
+import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
+
+
 
 function App() {
+  <DynamicContextProvider
+    settings={{
+      environmentId: process.env.REACT_APP_DYNAMIC_ENVIRONMENT_ID,
+      walletConnectors: [ EthereumWalletConnectors ],
+    }}></DynamicContextProvider>
   return (
     <Router>
       <div className="App">
