@@ -6,6 +6,11 @@ import FrontPage from './pages/FrontPage';
 import EntryPage from './pages/EntryPage';
 
 function App() {
+  <DynamicContextProvider
+    settings={{
+      environmentId: process.env.REACT_APP_DYNAMIC_ENVIRONMENT_ID,
+      walletConnectors: [ EthereumWalletConnectors ],
+    }}></DynamicContextProvider>
   return (
     <Router>
       <div className="App">
