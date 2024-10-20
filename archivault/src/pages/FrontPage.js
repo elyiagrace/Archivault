@@ -1,5 +1,5 @@
 // FrontPage.js
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { BookOpen, Grid, Award } from 'lucide-react';
 
 const FrontPage = () => {
@@ -12,6 +12,36 @@ const FrontPage = () => {
     artists: '',
     materials: ''
   });
+
+  const saveEntryToServer = async (entryData, image) => {
+    try {
+      const formData = new FormData();
+      for (const key in entryData) {
+        formData.append(key, entryData[key]);
+      }
+      
+      if (image) {
+        formData.append('image', image); //Add image file to formData
+      }
+  
+      const response = await fetch('http://localhost:3003/api/entries', {
+        method: 'POST',
+        body: formData //Send formData instead of JSON
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to save entry');
+      }
+  
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Error saving entry:', error);
+      throw error;
+    }
+  };
+  
+
   const [submissionStatus, setSubmissionStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef(null);
@@ -47,8 +77,8 @@ const FrontPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Simulate backend submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Save entry to server
+      await saveEntryToServer(formData);
 
       // Check if all fields are filled
       const allFieldsFilled = areAllFieldsFilled();

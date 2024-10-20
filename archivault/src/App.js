@@ -5,7 +5,6 @@ import { DynamicContextProvider } from '@dynamic-labs/sdk-react-core';
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 import LoginPage from './pages/LoginPage';
 import FrontPage from './pages/FrontPage';
-import EntryPage from './pages/EntryPage';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<FrontPage />} />
-            <Route path="/entry" element={<EntryPage />} />
           </Routes>
         </div>
       </Router>
